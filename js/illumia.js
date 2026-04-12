@@ -19,20 +19,29 @@ function toggleSpeak() {
   if (isSpeaking) stopSpeak(); else startSpeak();
 }
 
+/* ── Cached DOM refs ── */
+const _speakBtn = document.getElementById('speakBtn');
+const _btnLabel = document.getElementById('btnLabel');
+const _sphereWrap = document.getElementById('sphereWrap');
+const _heroRight = document.querySelector('.hero-right');
+const _waveform = document.getElementById('waveform');
+const _transcriptEl = document.getElementById('transcriptEl');
+const _aiVideo = document.getElementById('aiVideo');
+
 function startSpeak() {
   if (!window.speechSynthesis) {
     alert('Web Speech API not supported in this browser. Try Chrome or Edge.');
     return;
   }
   isSpeaking = true; speaking = true;
-  document.getElementById('speakBtn').classList.add('active');
-  document.getElementById('btnLabel').textContent = 'Stop';
-  document.getElementById('sphereWrap').classList.add('speaking');
-  document.getElementById('waveform').classList.add('active');
-  const video = document.getElementById('aiVideo');
-  if (video) {
-    video.loop = true;
-    videoPlayPromise = video.play();
+  _speakBtn.classList.add('active');
+  _btnLabel.textContent = 'Stop';
+  _sphereWrap.classList.add('speaking');
+  _heroRight.classList.add('speaking');
+  _waveform.classList.add('active');
+  if (_aiVideo) {
+    _aiVideo.loop = true;
+    videoPlayPromise = _aiVideo.play();
     if (videoPlayPromise) videoPlayPromise.catch(err => console.warn('Video play failed:', err));
   }
   speakNext();
@@ -42,13 +51,13 @@ function stopSpeak() {
   isSpeaking = false; speaking = false;
   window.speechSynthesis.cancel();
   clearTimeout(pauseTimeout); clearTimeout(wordTimeout);
-  document.getElementById('speakBtn').classList.remove('active');
-  document.getElementById('btnLabel').textContent = 'Talk to Illumia AI';
-  document.getElementById('sphereWrap').classList.remove('speaking');
-  document.getElementById('waveform').classList.remove('active');
-  const video = document.getElementById('aiVideo');
-  if (video) {
-    const doPause = () => { video.pause(); video.currentTime = 0; };
+  _speakBtn.classList.remove('active');
+  _btnLabel.textContent = 'Talk to Illumia AI';
+  _sphereWrap.classList.remove('speaking');
+  _heroRight.classList.remove('speaking');
+  _waveform.classList.remove('active');
+  if (_aiVideo) {
+    const doPause = () => { _aiVideo.pause(); _aiVideo.currentTime = 0; };
     if (videoPlayPromise) {
       videoPlayPromise.then(doPause).catch(doPause);
       videoPlayPromise = null;
@@ -56,9 +65,8 @@ function stopSpeak() {
       doPause();
     }
   }
-  const el = document.getElementById('transcriptEl');
-  el.classList.remove('visible');
-  setTimeout(() => { el.innerHTML = ''; }, 400);
+  _transcriptEl.classList.remove('visible');
+  setTimeout(() => { _transcriptEl.innerHTML = ''; }, 400);
 }
 
 function speakNext() {
@@ -81,8 +89,7 @@ function speakNext() {
 window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
 
 function showTranscript(text) {
-  const el = document.getElementById('transcriptEl');
-  el.innerHTML = ''; el.classList.add('visible');
+  _transcriptEl.innerHTML = ''; _transcriptEl.classList.add('visible');
   const words = text.split(' ');
   let i = 0;
   function next() {
@@ -92,40 +99,32 @@ function showTranscript(text) {
       sp.className = 'word';
       sp.textContent = (i === 0 ? '' : ' ') + words[i];
       sp.style.animationDelay = '0s';
-      el.appendChild(sp); i++;
+      _transcriptEl.appendChild(sp); i++;
       wordTimeout = setTimeout(next, 75 + Math.random() * 35);
     }
   }
   next();
 }
 
-/* ── NAV active on scroll ── */
+/* ── NAV active on scroll — rAF-throttled ── */
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
+let scrollTicking = false;
 window.addEventListener('scroll', () => {
-  let cur = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 120) cur = s.id;
-  });
-  navLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
-  });
-});
-
-/* ── ZEN PARALLAX ANIMATION ── */
-document.addEventListener('DOMContentLoaded', () => {
-  const zenElements = document.querySelectorAll('.zen-reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+  if (!scrollTicking) {
+    window.requestAnimationFrame(() => {
+      let cur = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+      });
+      scrollTicking = false;
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-  zenElements.forEach(el => observer.observe(el));
-});
+    scrollTicking = true;
+  }
+}, { passive: true });
 
 /* ── CONTACT VIDEO OBSERVER ── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -141,5 +140,55 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.05 });
     videoObserver.observe(document.getElementById('contact'));
+  }
+});
+
+/* ── CUSTOM FAST 500ms SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href');
+    if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+      e.preventDefault();
+      const target = document.querySelector(targetId);
+      if (!target) return;
+      
+      const startPosition = window.pageYOffset;
+      const targetPosition = target.getBoundingClientRect().top + startPosition - 122; 
+      const distance = targetPosition - startPosition;
+      const duration = 500; 
+      let start = null;
+
+      window.requestAnimationFrame(function step(timestamp) {
+        if (!start) start = timestamp;
+        const progress = Math.min(timestamp - start, duration);
+        const t = progress / duration;
+        const easeOutQuart = 1 - Math.pow(1 - t, 4); // Snappy start, soft brake
+            
+        window.scrollTo(0, startPosition + distance * easeOutQuart);
+        
+        if (progress < duration) {
+          window.requestAnimationFrame(step);
+        } else {
+          window.scrollTo(0, targetPosition);
+        }
+      });
+    }
+  });
+});
+
+/* ── CLIENTS CAROUSEL OBSERVER ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const clientsSection = document.getElementById('clients');
+  if (clientsSection) {
+    const clientsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          clientsSection.classList.add('in-view');
+        } else {
+          clientsSection.classList.remove('in-view');
+        }
+      });
+    }, { threshold: 0.05 });
+    clientsObserver.observe(clientsSection);
   }
 });

@@ -1,21 +1,4 @@
-@font-face {
-  font-family: "Montserrat";
-  src: url("../assets/fonts/font1.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../assets/fonts/font2.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Montserrat";
-  src: url("../assets/fonts/font3.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
+
 
 *,
 *::before,
@@ -36,7 +19,6 @@
   --glass-highlight: rgba(255, 255, 255, 0.6);
 }
 html {
-  scroll-behavior: smooth;
 }
 body {
   font-family: "Montserrat", sans-serif;
@@ -52,6 +34,7 @@ body {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  contain: strict;
 }
 .orb {
   position: absolute;
@@ -104,6 +87,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  contain: strict;
   background-image:
     linear-gradient(rgba(110, 63, 203, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(110, 63, 203, 0.035) 1px, transparent 1px);
@@ -125,8 +109,8 @@ nav {
   position: sticky;
   top: 0;
   z-index: 200;
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   background: rgba(248, 249, 252, 0.82);
   border-bottom: 1px solid rgba(171, 219, 254, 0.2);
   box-shadow: 0 1px 30px rgba(110, 63, 203, 0.04);
@@ -233,7 +217,7 @@ nav {
   font-weight: 500;
   border: none;
   cursor: pointer;
-  transition: all 0.25s;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
   letter-spacing: 0.05em;
 }
 .nav-cta:hover {
@@ -321,8 +305,7 @@ nav {
   font-weight: 500;
   border: none;
   cursor: pointer;
-  transition: all 0.28s;
-  box-shadow: 0 4px 24px rgba(110, 63, 203, 0.32);
+  transition: transform 0.28s, box-shadow 0.28s;
   letter-spacing: 0.04em;
   display: flex;
   align-items: center;
@@ -342,10 +325,7 @@ nav {
   font-weight: 500;
   border: 1px solid rgba(37, 38, 40, 0.2);
   cursor: pointer;
-  transition: all 0.28s;
-  letter-spacing: 0.04em;
-}
-.btn-ghost:hover {
+  transition: border-color 0.28s, color 0.28s;
   border-color: var(--primary);
   color: var(--primary);
 }
@@ -791,14 +771,9 @@ nav {
 /* Floating metric tags — Apple Liquid Glass */
 .ftag {
   position: absolute;
-  backdrop-filter: blur(36px) saturate(2.5) brightness(1.1);
-  -webkit-backdrop-filter: blur(36px) saturate(2.5) brightness(1.1);
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.62) 0%,
-    rgba(230, 218, 255, 0.25) 50%,
-    rgba(255, 255, 255, 0.45) 100%
-  );
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.62) 0%, rgba(230,218,255,0.25) 50%, rgba(255,255,255,0.45) 100%),
+    url('../assets/card-glass.webp') center/cover no-repeat;
   border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 18px;
   padding: 0.6rem 1.1rem;
@@ -808,6 +783,7 @@ nav {
     0 4px 24px rgba(110, 63, 203, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.9) inset;
   animation: floatTag 5s ease-in-out infinite;
+  will-change: transform;
   pointer-events: none;
   min-width: 85px;
 }
@@ -882,6 +858,12 @@ nav {
   50% {
     transform: translateY(-7px);
   }
+}
+
+.hero-right:not(.speaking) *,
+.hero-right:not(.speaking) *::before,
+.hero-right:not(.speaking) *::after {
+  animation-play-state: paused !important;
 }
 
 /* Waveform */
@@ -1036,11 +1018,12 @@ nav {
   display: flex;
   gap: 1px;
   margin: 0 4rem 0;
-  background: rgba(171, 219, 254, 0.15);
+  background:
+    rgba(171, 219, 254, 0.15),
+    url('../assets/card-glass.webp') center/cover no-repeat;
   border-radius: 26px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(36px) saturate(2) brightness(1.05);
   box-shadow:
     0 2px 1px rgba(255, 255, 255, 0.65) inset,
     0 4px 24px rgba(110, 63, 203, 0.06);
@@ -1086,6 +1069,10 @@ section {
   padding: 7rem 4rem;
   position: relative;
 }
+#services, #capabilities, #about, #clients, #contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
 .section-tag {
   font-size: 0.62rem;
   font-weight: 500;
@@ -1130,18 +1117,14 @@ section {
   overflow: hidden;
 }
 .svc-card {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.62) 0%,
-    rgba(230, 218, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.5) 100%
-  );
-  backdrop-filter: blur(40px) saturate(2.2) brightness(1.06);
-  -webkit-backdrop-filter: blur(40px) saturate(2.2) brightness(1.06);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.55) 0%, rgba(230,218,255,0.18) 50%, rgba(255,255,255,0.42) 100%),
+    url('../assets/card-glass.webp') center/cover no-repeat;
   padding: 2.8rem 2.5rem;
-  transition: all 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   position: relative;
   overflow: hidden;
+  contain: layout style;
 }
 .svc-card::before {
   content: "";
@@ -1287,20 +1270,16 @@ section {
   margin-top: 3.5rem;
 }
 .cap-card {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.6) 0%,
-    rgba(220, 210, 255, 0.18) 55%,
-    rgba(255, 255, 255, 0.5) 100%
-  );
-  backdrop-filter: blur(36px) saturate(2) brightness(1.05);
-  -webkit-backdrop-filter: blur(36px) saturate(2) brightness(1.05);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.55) 0%, rgba(220,210,255,0.15) 55%, rgba(255,255,255,0.42) 100%),
+    url('../assets/card-glass.webp') center/cover no-repeat;
   border: 1px solid rgba(255, 255, 255, 0.68);
   border-radius: 28px;
   padding: 2rem 1.8rem;
-  transition: all 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   position: relative;
   overflow: hidden;
+  contain: layout style;
   box-shadow:
     0 2px 1px rgba(255, 255, 255, 0.65) inset,
     0 4px 24px rgba(110, 63, 203, 0.06);
@@ -1496,20 +1475,16 @@ section {
   gap: 1rem;
 }
 .about-card {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.62) 0%,
-    rgba(220, 210, 255, 0.2) 55%,
-    rgba(255, 255, 255, 0.5) 100%
-  );
-  backdrop-filter: blur(36px) saturate(2.2) brightness(1.06);
-  -webkit-backdrop-filter: blur(36px) saturate(2.2) brightness(1.06);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.55) 0%, rgba(220,210,255,0.18) 55%, rgba(255,255,255,0.42) 100%),
+    url('../assets/card-glass.webp') center/cover no-repeat;
   border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 24px;
   padding: 1.6rem;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  contain: layout style;
   box-shadow:
     0 2px 1px rgba(255, 255, 255, 0.7) inset,
     0 4px 20px rgba(110, 63, 203, 0.06);
@@ -1611,10 +1586,14 @@ section {
   gap: 6rem;
   align-items: center;
   animation: scrollCarousel 25s linear infinite;
+  animation-play-state: paused;
   padding-right: 6rem;
   will-change: transform;
 }
-.carousel-track:hover {
+#clients.in-view .carousel-track {
+  animation-play-state: running;
+}
+#clients.in-view .carousel-track:hover {
   animation-play-state: paused;
 }
 .carousel-logo {
@@ -1939,21 +1918,4 @@ footer {
   }
 }
 
-/* ── ZEN PARALLAX / REVEAL ANIMATIONS ── */
-.zen-reveal {
-  opacity: 0;
-  transform: translateY(50px) scale(0.97);
-  transition:
-    opacity 1.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.zen-reveal.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-.section-tag.zen-reveal {
-  transition-delay: 0s;
-}
-.section-title.zen-reveal {
-  transition-delay: 0.25s;
-}
+
