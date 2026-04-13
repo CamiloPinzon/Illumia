@@ -1,0 +1,30 @@
+/* ── RESET & BASE ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #6e3fcb;
+  --dark: #252628;
+  --light-blue: #abdbfe;
+  --white: #ffffff;
+  --bg: #f8f9fc;
+  --muted: #353638;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* Shared keyframe used across components */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}

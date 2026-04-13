@@ -1,0 +1,50 @@
+/* ── STATS STRIP ── */
+.stats-strip {
+  display: flex;
+  gap: 1px;
+  margin: 0 4rem 0;
+  background:
+    rgba(171, 219, 254, 0.15),
+    url("../assets/card-glass.webp") center/cover no-repeat;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 2px 1px rgba(255, 255, 255, 0.65) inset,
+    0 4px 24px rgba(110, 63, 203, 0.06);
+}
+.stat-item {
+  flex: 1;
+  padding: 2rem 1rem;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(220, 210, 255, 0.15) 100%
+  );
+  text-align: center;
+  transition: background 0.2s;
+}
+.stat-item:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(220, 210, 255, 0.25) 100%
+  );
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--primary), #8a5de0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-lbl {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 0.25rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

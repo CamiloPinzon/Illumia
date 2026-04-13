@@ -1,0 +1,54 @@
+/* ── SECTION BASE ── */
+section {
+  padding: 7rem 4rem;
+  position: relative;
+}
+#services,
+#capabilities,
+#about,
+#clients,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+.section-tag {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: var(--primary);
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-tag::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--primary);
+}
+/* Modifier: centered */
+.section-tag--center {
+  justify-content: center;
+}
+/* Modifier: light blue tint */
+.section-tag--light {
+  color: var(--light-blue);
+}
+
+.section-title {
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--dark);
+  line-height: 1.1;
+}
+.section-title em {
+  font-style: normal;
+  color: var(--primary);
+}
+/* Modifier: centered */
+.section-title--center {
+  text-align: center;
+}

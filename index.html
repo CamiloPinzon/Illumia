@@ -13,7 +13,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./styles/styles.css">
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/background.css">
+  <link rel="stylesheet" href="./styles/nav.css">
+  <link rel="stylesheet" href="./styles/sections.css">
+  <link rel="stylesheet" href="./styles/hero.css">
+  <link rel="stylesheet" href="./styles/stats.css">
+  <link rel="stylesheet" href="./styles/services.css">
+  <link rel="stylesheet" href="./styles/capabilities.css">
+  <link rel="stylesheet" href="./styles/about.css">
+  <link rel="stylesheet" href="./styles/clients.css">
+  <link rel="stylesheet" href="./styles/contact.css">
+  <link rel="stylesheet" href="./styles/footer.css">
+  <link rel="stylesheet" href="./styles/responsive.css">
 </head>
 
 <body>
@@ -150,15 +162,14 @@
         <p class="hero-sub">We orchestrate customer experiences with Gen AI — faster decisions, more efficient
           operations, and tangible results from day one.</p>
         <div class="hero-actions">
-          <button class="btn-hero" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          <button id="btnRequestDemo" class="btn-hero">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M1 7h12M7 1l6 6-6 6" stroke="white" stroke-width="1.5" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
             Request a Demo
           </button>
-          <button class="btn-ghost"
-            onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+          <button id="btnExplore" class="btn-ghost">Explore Services</button>
         </div>
       </div>
 
@@ -241,7 +252,7 @@
 
             <!-- Bottom controls -->
             <div class="ai-bottom-panel">
-              <button class="speak-btn" id="speakBtn" onclick="toggleSpeak()">
+              <button class="speak-btn" id="speakBtn">
                 <svg class="mic-icon" viewBox="0 0 16 16" fill="none">
                   <rect x="5" y="1" width="6" height="9" rx="3" stroke="white" stroke-width="1.3" />
                   <path d="M2 7c0 3.3 2.7 6 6 6s6-2.7 6-6" stroke="white" stroke-width="1.3" stroke-linecap="round" />
@@ -432,46 +443,45 @@
             <div class="tl"><span class="tp">›</span><span class="tc">system.status()</span></div>
             <div class="tl"><span class="to">STATUS: <span class="tg">ONLINE</span></span></div>
             <div class="tl"><span class="to">CORE_TEMP: <span class="tv">36.2°C</span></span></div>
-            <div style="height:0.4rem"></div>
+            <div class="t-spacer"></div>
             <div class="tl"><span class="tp">›</span><span class="tc">neural.load()</span></div>
             <div class="tl"><span class="to">MODELS_ACTIVE: <span class="tv">847</span></span></div>
             <div class="tl"><span class="to">ACCURACY: <span class="tg">98.7%</span></span></div>
-            <div style="height:0.4rem"></div>
+            <div class="t-spacer"></div>
             <div class="tl"><span class="tp">›</span><span class="tc">network.ping()</span></div>
             <div class="tl"><span class="to">LATENCY: <span class="tv">12ms</span></span></div>
             <div class="tl"><span class="to">NODES: <span class="tg">28/28 healthy</span></span></div>
-            <div style="height:0.4rem"></div>
+            <div class="t-spacer"></div>
             <div class="tl"><span class="tp">›</span><span class="tc">_<span class="tc-blink"></span></span></div>
           </div>
         </div>
         <div>
           <div class="section-tag">Real-time Metrics</div>
-          <h3 style="font-size:1.6rem;font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:1.5rem;">
-            System <em style="font-style:normal;color:var(--primary);">Performance</em></h3>
+          <h3 class="terminal-heading">System <em>Performance</em></h3>
           <div class="t-metrics">
             <div class="tm-row"><span class="tm-label">Processing Speed</span>
               <div class="tm-track">
-                <div class="tm-fill" style="width:95%"></div>
+                <div class="tm-fill" style="--fill:95%"></div>
               </div><span class="tm-pct">95%</span>
             </div>
             <div class="tm-row"><span class="tm-label">Model Accuracy</span>
               <div class="tm-track">
-                <div class="tm-fill" style="width:98%"></div>
+                <div class="tm-fill" style="--fill:98%"></div>
               </div><span class="tm-pct">98%</span>
             </div>
             <div class="tm-row"><span class="tm-label">Scalability</span>
               <div class="tm-track">
-                <div class="tm-fill" style="width:89%"></div>
+                <div class="tm-fill" style="--fill:89%"></div>
               </div><span class="tm-pct">89%</span>
             </div>
             <div class="tm-row"><span class="tm-label">Security Score</span>
               <div class="tm-track">
-                <div class="tm-fill" style="width:99%"></div>
+                <div class="tm-fill" style="--fill:99%"></div>
               </div><span class="tm-pct">99%</span>
             </div>
             <div class="tm-row"><span class="tm-label">Availability</span>
               <div class="tm-track">
-                <div class="tm-fill" style="width:100%"></div>
+                <div class="tm-fill" style="--fill:100%"></div>
               </div><span class="tm-pct">100%</span>
             </div>
           </div>
@@ -526,7 +536,7 @@
     <!-- ═══ CLIENTS / LOGOS ═══ -->
     <section id="clients" class="clients-section">
       <div class="clients-bg"></div>
-      <div class="section-tag" style="justify-content:center; color: var(--light-blue)">Trusted by Visionaries</div>
+      <div class="section-tag section-tag--center section-tag--light">Trusted by Visionaries</div>
       
       <div class="carousel-container">
         <div class="carousel-track">
@@ -552,8 +562,8 @@
       <video id="contactVideo" class="section-bg-video" loop muted playsinline preload="none">
         <source src="./assets/register.webm" type="video/webm">
       </video>
-      <div class="section-tag" style="justify-content:center;">04 · Contact</div>
-      <h2 class="section-title" style="text-align:center;">Ready to <em>Transform</em>?</h2>
+      <div class="section-tag section-tag--center">04 · Contact</div>
+      <h2 class="section-title section-title--center">Ready to <em>Transform</em>?</h2>
       <div class="contact-glass">
         <h2>Orchestrate CX with <em>Gen AI</em></h2>
         <p>Leave your details and we'll show you how our AI Agents understand context, decide and act to deliver
@@ -679,7 +689,7 @@
 
   </div>
 
-  <script src="./js/illumia.js" defer></script>
+  <script type="module" src="./js/main.js"></script>
 
 
 </body>

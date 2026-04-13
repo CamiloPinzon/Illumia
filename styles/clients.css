@@ -1,0 +1,70 @@
+/* ── CLIENTS CAROUSEL ── */
+.clients-section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 4rem;
+  margin: 2rem 4rem;
+  border-radius: 40px;
+  border: 1px solid rgba(171, 219, 254, 0.15);
+  box-shadow: 0 24px 64px rgba(110, 63, 203, 0.08);
+}
+.clients-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, rgba(30, 20, 50, 0.95), rgba(16, 12, 28, 1));
+}
+.clients-bg::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 140%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(110, 63, 203, 0.15), transparent 60%);
+  pointer-events: none;
+}
+.carousel-container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 3rem 0 1rem;
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+.carousel-track {
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+  justify-content: center;
+  animation: scrollCarousel 40s linear infinite;
+  animation-play-state: paused;
+  padding-right: 6rem;
+  will-change: transform;
+}
+#clients.in-view .carousel-track {
+  animation-play-state: running;
+}
+#clients.in-view .carousel-track:hover {
+  animation-play-state: paused;
+}
+.carousel-logo {
+  width: 130px;
+  height: 48px;
+  object-fit: contain;
+  object-position: center;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1) opacity(0.65);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.carousel-logo:hover {
+  filter: brightness(0) invert(1) opacity(1);
+  transform: scale(1.08);
+}
+@keyframes scrollCarousel {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}

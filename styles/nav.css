@@ -1,0 +1,117 @@
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4rem;
+  height: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(248, 249, 252, 0.82);
+  border-bottom: 1px solid rgba(171, 219, 254, 0.2);
+  box-shadow: 0 1px 30px rgba(110, 63, 203, 0.04);
+}
+.nav-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.nav-logo-link svg {
+  height: 38px;
+  width: auto;
+  display: block;
+  background: transparent;
+}
+.f-logo-svg svg {
+  height: 26px;
+  width: auto;
+  display: block;
+  background: transparent;
+}
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+}
+.nav-links li a {
+  display: block;
+  padding: 0 1.2rem;
+  height: 72px;
+  line-height: 72px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5a5d6e;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-links li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 1.2rem;
+  right: 1.2rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--light-blue));
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s;
+}
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: var(--primary);
+}
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
+  transform: scaleX(1);
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--primary);
+  background: rgba(110, 63, 203, 0.07);
+  border: 1px solid rgba(110, 63, 203, 0.18);
+  border-radius: 100px;
+  padding: 0.3rem 0.9rem;
+  text-transform: uppercase;
+}
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: blink 2s ease infinite;
+}
+.nav-cta {
+  padding: 0.55rem 1.5rem;
+  border-radius: 100px;
+  background: var(--primary);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  letter-spacing: 0.05em;
+}
+.nav-cta:hover {
+  background: #5a2eab;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(110, 63, 203, 0.35);
+}
