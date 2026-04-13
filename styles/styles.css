@@ -1617,7 +1617,8 @@ section {
 }
 .carousel-container {
   overflow: hidden;
-  white-space: nowrap;
+  display: flex;
+  justify-content: center;
   position: relative;
   width: 100%;
   padding: 3rem 0 1rem;
@@ -1637,10 +1638,11 @@ section {
   );
 }
 .carousel-track {
-  display: inline-flex;
+  display: flex;
   gap: 6rem;
   align-items: center;
-  animation: scrollCarousel 25s linear infinite;
+  justify-content: center;
+  animation: scrollCarousel 40s linear infinite;
   animation-play-state: paused;
   padding-right: 6rem;
   will-change: transform;
@@ -1652,8 +1654,11 @@ section {
   animation-play-state: paused;
 }
 .carousel-logo {
-  height: 45px;
+  width: 130px;
+  height: 48px;
   object-fit: contain;
+  object-position: center;
+  flex-shrink: 0;
   filter: brightness(0) invert(1) opacity(0.65);
   transition: all 0.3s;
   cursor: pointer;
